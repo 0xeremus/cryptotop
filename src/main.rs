@@ -32,19 +32,21 @@ fn main() {
     // Select Cryptotop Utility to execute based on commandline args.
     match args.subcommand() {
         ("caesar", Some(sub_matches)) => {
-            println!("Args received: {:?}", sub_matches.value_of("input"));
-            // TODO implement handling this result
-            let _ = brute_force(sub_matches.value_of("input").unwrap());
-        }
-        ("base64", Some(sub_matches)) => {
-            println!("Base64 Util subcommand");
-            match sub_matches.subcommand() {
-                ("decode", Some(bottom_matches)) => {
-                    println!("Args received: {:?}", bottom_matches.value_of("input"))
-                }
-                _ => unreachable!(),
+            let res = brute_force(sub_matches.value_of("input").unwrap());
+            println!(
+                "Brute force results for: {}\n",
+                sub_matches.value_of("input").unwrap()
+            );
+            for i in res {
+                println!("{}", i);
             }
         }
+        ("base64", Some(sub_matches)) => match sub_matches.subcommand() {
+            ("decode", Some(bottom_matches)) => {
+                let _ = bottom_matches.value_of("input");
+            }
+            _ => unreachable!(),
+        },
         _ => unreachable!(),
     }
 }
