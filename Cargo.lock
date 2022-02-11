@@ -53,6 +53,14 @@ version = "0.1.0"
 dependencies = [
  "caesar",
  "clap",
+ "english_recognition",
+]
+
+[[package]]
+name = "english_recognition"
+version = "0.1.0"
+dependencies = [
+ "caesar",
 ]
 
 [[package]]

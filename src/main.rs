@@ -1,5 +1,7 @@
+use base64::base64::{decode, encode};
 use caesar::caesar::brute_force;
 use clap::{App, AppSettings, Arg, SubCommand};
+use english_recognition::frequency_analysis::score_strings;
 
 //https://github.com/clap-rs/clap/blob/v3.0.12/examples/tutorial_builder/03_04_subcommands.rs
 fn main() {
@@ -14,7 +16,7 @@ fn main() {
                 .arg(
                     Arg::with_name("input")
                         .help("string to bruteforce")
-                        .required(false),
+                        .required(true),
                 ),
         )
         .subcommand(
@@ -31,22 +33,40 @@ fn main() {
 
     // Select Cryptotop Utility to execute based on commandline args.
     match args.subcommand() {
+        // HANDLE CAESAR SUB COMMANDS
         ("caesar", Some(sub_matches)) => {
+            // bruteforce string
             let res = brute_force(sub_matches.value_of("input").unwrap());
+
+            // order string by most likely english lang string
+            let res = score_strings(res);
+
             println!(
                 "Brute force results for: {}\n",
                 sub_matches.value_of("input").unwrap()
             );
-            for i in res {
-                println!("{}", i);
+
+            println!("Ordered by english language frequency score:");
+            let mut first = true;
+            for (can, score) in res {
+                if first {
+                    println!("Highest score of {score} for:\n\t{can}\n");
+                    first = false;
+                } else {
+                    println!("{can}");
+                }
             }
         }
+
+        // HANDLE BASE64 SUB COMMANDS
         ("base64", Some(sub_matches)) => match sub_matches.subcommand() {
             ("decode", Some(bottom_matches)) => {
                 let _ = bottom_matches.value_of("input");
             }
             _ => unreachable!(),
         },
+
+        // should never be reached due to use of CLAP.
         _ => unreachable!(),
     }
 }
