@@ -141,28 +141,6 @@ pub mod base64 {
         }
     }
 
-    // fn stitch(bytes: Vec<u8>) -> Vec<u8> {
-    //     let out = match bytes.len() {
-    //         2 => vec![
-    //             (bytes[0] & 0b00111111) << 2 | bytes[1] >> 4,
-    //             (bytes[1] & 0b00001111) << 4,
-    //         ],
-
-    //         3 => vec![
-    //             (bytes[0] & 0b00111111) << 2 | bytes[1] >> 4,
-    //             (bytes[1] & 0b00001111) << 4 | bytes[2] >> 2,
-    //             (bytes[2] & 0b00000011) << 6,
-    //         ],
-
-    //         4 => vec![
-    //             (bytes[0] & 0b00111111) << 2 | bytes[1] >> 4,
-    //             (bytes[1] & 0b00001111) << 4 | bytes[2] >> 2,
-    //             (bytes[2] & 0b00000011) << 6 | bytes[3] & 0b00111111,
-    //         ],
-
-    //         _ => unreachable!(),
-    //     };
-
     fn decode_index(input: u8) -> u8 {
         // Finds the relative offset into the b64 alphabet and corrects for offset.
         match input {
