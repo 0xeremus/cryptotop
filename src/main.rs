@@ -7,7 +7,7 @@ use english_recognition::frequency_analysis::score_strings;
 fn main() {
     let args = App::new("CryptoTop")
         .version("0.1")
-        .about("Utility for pleasurably interacting with cryptography primitives.")
+        .about("A service top for a bratty crypto problem near you.")
         .setting(AppSettings::SubcommandRequiredElseHelp)
         .subcommand(
             SubCommand::with_name("caesar")
@@ -26,7 +26,12 @@ fn main() {
                 .subcommand(
                     SubCommand::with_name("decode")
                         .help("Decodes entered string as base64")
-                        .arg(Arg::with_name("input").help("String to decode")),
+                        .arg(Arg::with_name("input").help("Data to decode")),
+                )
+                .subcommand(
+                    SubCommand::with_name("encode")
+                        .help("Encodes entered bytes as base64")
+                        .arg(Arg::with_name("input").help("Data to encode")),
                 ),
         )
         .get_matches();
@@ -61,7 +66,19 @@ fn main() {
         // HANDLE BASE64 SUB COMMANDS
         ("base64", Some(sub_matches)) => match sub_matches.subcommand() {
             ("decode", Some(bottom_matches)) => {
-                let _ = bottom_matches.value_of("input");
+                let input = bottom_matches.value_of("input").unwrap();
+                let decoded = decode(input);
+
+                let attempt = String::from_utf8(decoded);
+
+                match attempt {
+                    Ok(good) => println!("{good}"),
+                    Err(_) => println!("Error displaying decoded"),
+                };
+            }
+            ("encode", Some(bottom_matches)) => {
+                let input = bottom_matches.value_of("input").unwrap();
+                println!("{}", encode(Vec::from(input)))
             }
             _ => unreachable!(),
         },

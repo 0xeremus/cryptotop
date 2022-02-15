@@ -1,3 +1,7 @@
+# ignore target and nested target folders
 /target
 */target
 */target/
+
+.vscode
+

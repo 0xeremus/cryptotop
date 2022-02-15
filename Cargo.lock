@@ -23,6 +23,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "base64"
+version = "0.1.0"
+
+[[package]]
 name = "bitflags"
 version = "1.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -51,6 +55,7 @@ dependencies = [
 name = "cryptotop"
 version = "0.1.0"
 dependencies = [
+ "base64",
  "caesar",
  "clap",
  "english_recognition",
