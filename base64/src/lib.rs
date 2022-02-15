@@ -151,7 +151,6 @@ pub mod base64 {
             47 => 63,
 
             _ => {
-                println!("{input}");
                 unreachable!()
             }
         }
