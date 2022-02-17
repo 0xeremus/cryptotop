@@ -10,3 +10,4 @@ clap = "2"
 caesar = {path = "./caesar"}
 english_recognition = {path = "./english_recognition"}
 base64 = {path = "./base64"}
+hex = {path = "./hex"}
