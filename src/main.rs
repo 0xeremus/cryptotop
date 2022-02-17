@@ -1,7 +1,8 @@
-use base64::base64::{decode, encode};
+use base64::base64;
 use caesar::caesar::brute_force;
 use clap::{App, AppSettings, Arg, SubCommand};
 use english_recognition::frequency_analysis::score_strings;
+use hex::hex;
 
 //https://github.com/clap-rs/clap/blob/v3.0.12/examples/tutorial_builder/03_04_subcommands.rs
 fn main() {
@@ -31,6 +32,20 @@ fn main() {
                 .subcommand(
                     SubCommand::with_name("encode")
                         .help("Encodes entered bytes as base64")
+                        .arg(Arg::with_name("input").help("Data to encode")),
+                ),
+        )
+        .subcommand(
+            SubCommand::with_name("hex")
+                .about("Decode and Encode hex strings")
+                .subcommand(
+                    SubCommand::with_name("decode")
+                        .help("Enter hex string to decode")
+                        .arg(Arg::with_name("input").help("Hex data to decode")),
+                )
+                .subcommand(
+                    SubCommand::with_name("encode")
+                        .help("Enter string or data to encode")
                         .arg(Arg::with_name("input").help("Data to encode")),
                 ),
         )
@@ -67,7 +82,7 @@ fn main() {
         ("base64", Some(sub_matches)) => match sub_matches.subcommand() {
             ("decode", Some(bottom_matches)) => {
                 let input = bottom_matches.value_of("input").unwrap();
-                let decoded = decode(input);
+                let decoded = base64::decode(input);
 
                 let attempt = String::from_utf8(decoded);
 
@@ -78,7 +93,20 @@ fn main() {
             }
             ("encode", Some(bottom_matches)) => {
                 let input = bottom_matches.value_of("input").unwrap();
-                println!("{}", encode(Vec::from(input)))
+                println!("{}", base64::encode(Vec::from(input)))
+            }
+            _ => unreachable!(),
+        },
+
+        // handle hex subcommand
+        ("hex", Some(sub_matches)) => match sub_matches.subcommand() {
+            ("decode", Some(bottom_matches)) => {
+                let input = bottom_matches.value_of("input").unwrap();
+                println!("{:?}", hex::decode(input))
+            }
+            ("encode", Some(bottom_matches)) => {
+                let input = bottom_matches.value_of("input").unwrap();
+                println!("{}", hex::encode(Vec::<u8>::from(input)));
             }
             _ => unreachable!(),
         },
