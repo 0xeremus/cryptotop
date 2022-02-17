@@ -92,7 +92,7 @@ pub mod base64 {
     }
 
     fn validate_input(input: &str) -> bool {
-        let res = input.len() % 4 != 0;
+        let res = input.len() % 4 == 0;
 
         res && input
             .chars()

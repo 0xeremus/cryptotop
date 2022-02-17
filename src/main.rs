@@ -82,7 +82,7 @@ fn main() {
         ("base64", Some(sub_matches)) => match sub_matches.subcommand() {
             ("decode", Some(bottom_matches)) => {
                 let input = bottom_matches.value_of("input").unwrap();
-                let decoded = base64::decode(input);
+                let decoded = base64::decode(input.trim());
 
                 let attempt = String::from_utf8(decoded);
 
@@ -102,7 +102,13 @@ fn main() {
         ("hex", Some(sub_matches)) => match sub_matches.subcommand() {
             ("decode", Some(bottom_matches)) => {
                 let input = bottom_matches.value_of("input").unwrap();
-                println!("{:?}", hex::decode(input))
+                let decoded = hex::decode(input);
+
+                let attempt = String::from_utf8(decoded.clone());
+                match attempt {
+                    Ok(x) => println!("{}", x),
+                    Err(_) => println!("{:?}", decoded),
+                }
             }
             ("encode", Some(bottom_matches)) => {
                 let input = bottom_matches.value_of("input").unwrap();
