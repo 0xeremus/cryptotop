@@ -8,7 +8,7 @@ use hex::hex;
 fn main() {
     let args = App::new("CryptoTop")
         .version("0.1")
-        .about("A service top for a bratty crypto problem near you.")
+        .about("A service top for a bossy crypto problem near you.")
         .setting(AppSettings::SubcommandRequiredElseHelp)
         .subcommand(
             SubCommand::with_name("caesar")

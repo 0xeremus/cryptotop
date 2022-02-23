@@ -1,6 +1,6 @@
 # Cryptotop.
 
-A service top for any bratty crypto problem near you.
+A service top for any bossy crypto problem near you.
 
 ## Functionality
 
