@@ -1,6 +1,6 @@
 # Cryptotop.
 
-A service top for any bossy crypto problem near you.
+Utility to put any functionality I want in a CLI tool for crypto into. Mostly just something to tinker with.
 
 ## Functionality
 
